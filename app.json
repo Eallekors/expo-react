@@ -2,9 +2,13 @@
   "expo": {
     "name": "expo-react",
     "slug": "expo-react",
+    "scheme": "project",
     "version": "1.0.0",
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "web": {
+      "bundler": "metro"
+    }
   }
 }
