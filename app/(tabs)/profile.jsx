@@ -11,17 +11,23 @@ import useAppwrite from '../../lib/useAppwrite'
 import VideoCard from '../../components/VideoCard'
 import { useLocalSearchParams } from 'expo-router'
 import InfoBox from '../../components/InfoBox'
-
+import { router } from 'expo-router'
 import { useGlobalContext } from '../../context/GlobalProvider'
 import { TouchableOpacity } from 'react-native'
+import { signOut } from '../../lib/appwrite'; 
+
 
 const Profile = () => {
-  const { user, setUser, setIsLogged } = useGlobalContext();
+  const { user, setUser, setIsLoggedIn } = useGlobalContext();
   const { data: posts } = useAppwrite(() => getUserPosts(user.$id));
+  console.log(user);
+  const logout = async () => {
+    await signOut();  
+    // setUser(null);
+    //setIsLoggedIn(false); 
 
-  const logout = () => {
-
-  }
+    router.replace("/sign-in");
+  } 
 
   
   
