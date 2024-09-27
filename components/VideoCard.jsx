@@ -25,8 +25,16 @@ const VideoCard = ({video : {title,thumbnail,video,creator: { username, avatar}}
             </Text>
           </View>
         </View>
+        
             <View className="pt-2">
+              <TouchableOpacity activeOpacity={0.7} onPress={() => {}}>
+                <Image source={icons.heart} className="w-5 h-5" resizeMode="contain" />
+              </TouchableOpacity>
+            </View>
+            <View className="pt-2">
+                
                 <Image source={icons.menu} className="w-5 h-5" resizeMode="contain" />
+               
             </View>
       </View>
         {play ? (

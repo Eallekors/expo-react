@@ -20,7 +20,7 @@ import { signOut } from '../../lib/appwrite';
 const Profile = () => {
   const { user, setUser, setIsLoggedIn } = useGlobalContext();
   const { data: posts } = useAppwrite(() => getUserPosts(user.$id));
-  console.log(user);
+  
   const logout = async () => {
     await signOut();  
     // setUser(null);
