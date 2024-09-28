@@ -19,8 +19,6 @@ const Home = () => {
 
   const { data: latestposts } = useAppwrite(getLatestPosts);
 
-  
-
   const [refreshing, setRefreshing] = useState(false)
   
   const onRefresh = async () => {
@@ -33,10 +31,13 @@ const Home = () => {
       <FlatList
         data={posts}
         keyExtractor={( item ) => item.$id}
+        
         renderItem={({ item }) => (
-          <VideoCard 
-            video={item}
-          />
+          <VideoCard
+          video={item} // this passes the rest of the video details
+          videoid={item.$id} // explicitly passing the video ID
+          onUpdate={refetch}
+        />
         )}
         ListHeaderComponent={() => (
           <View className="my-6 px-4 space-y-6">
@@ -58,7 +59,7 @@ const Home = () => {
               </View>
             </View>
 
-            <SearchInput />
+            <SearchInput title="Search for a video topic" />
 
             <View className="w-full flex-1 pt-5 pb-8">
               <Text className="text-lg font-pregular text-gray-100 mb-3">

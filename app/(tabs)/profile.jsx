@@ -37,9 +37,10 @@ const Profile = () => {
         data={posts}
         keyExtractor={( item ) => item.$id}
         renderItem={({ item }) => (
-          <VideoCard 
-            video={item}
-          />
+          <VideoCard
+          video={item} // this passes the rest of the video details
+          videoid={item.$id} // explicitly passing the video ID
+        />
         )}
         ListHeaderComponent={() => (
           <View className="w-full flex justify-center items-center mt-6 mb-12 px-4">

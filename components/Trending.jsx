@@ -64,6 +64,8 @@ const TredningItem = ({ activeItem, item}) => {
         />
       </TouchableOpacity>
      )}
+
+     
     </Animatable.View>
   )
 }
