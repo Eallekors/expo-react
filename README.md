@@ -16,6 +16,8 @@ Pull-to-Refresh Functionality: Users can refresh content with a simple pull gest
 
 *Full-Text Search Capability: Efficiently search through videos with real-time suggestions and instant results.
 
+*Bookmarking: Save your favorite videos.
+
 *Tab Navigation: Navigate between sections like Home, Search, and Profile with ease using tab navigation.
 
 *Post Creation Screen for Uploading Media: Upload video and image posts directly from the app with integrated media selection.
