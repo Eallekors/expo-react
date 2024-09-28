@@ -2,15 +2,15 @@ import { Text, View, FlatList, Image, RefreshControl, Alert } from 'react-native
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { images } from '../../constants'
-import SearchInput from '../../components/SearchInput'
-import Trending from '../../components/Trending'
-import EmptyState from '../../components/EmptyState'
-import { getAllPosts, getLatestPosts } from '../../lib/appwrite'
-import useAppwrite from '../../lib/useAppwrite'
-import VideoCard from '../../components/VideoCard'
+import { images } from '@constants';
+import SearchInput from '@components/SearchInput';
+import Trending from '@components/Trending';
+import EmptyState from '@components/EmptyState';
+import { getAllPosts, getLatestPosts } from '@lib/appwrite';
+import useAppwrite from '@lib/useAppwrite';
+import VideoCard from '@components/VideoCard';
+import { useGlobalContext } from '@context/GlobalProvider';
 
-import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Home = () => {
   const { user, setUser, setIsLoggedIn } = useGlobalContext();
@@ -36,7 +36,7 @@ const Home = () => {
           <VideoCard
           video={item} // this passes the rest of the video details
           videoid={item.$id} // explicitly passing the video ID
-          onUpdate={refetch}
+          onUpdate={onRefresh}
         />
         )}
         ListHeaderComponent={() => (

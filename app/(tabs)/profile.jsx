@@ -2,25 +2,26 @@ import { Text, View, FlatList, Image, RefreshControl, Alert } from 'react-native
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { images,icons } from '../../constants'
-import SearchInput from '../../components/SearchInput'
-import Trending from '../../components/Trending'
-import EmptyState from '../../components/EmptyState'
-import { getAllPosts, getLatestPosts, getUserPosts, searchPosts } from '../../lib/appwrite'
-import useAppwrite from '../../lib/useAppwrite'
-import VideoCard from '../../components/VideoCard'
-import { useLocalSearchParams } from 'expo-router'
-import InfoBox from '../../components/InfoBox'
-import { router } from 'expo-router'
-import { useGlobalContext } from '../../context/GlobalProvider'
-import { TouchableOpacity } from 'react-native'
-import { signOut } from '../../lib/appwrite'; 
+import { images, icons } from '@constants';
+import SearchInput from '@components/SearchInput';
+import Trending from '@components/Trending';
+import EmptyState from '@components/EmptyState';
+import { getAllPosts, getLatestPosts, getUserPosts, searchPosts } from '@lib/appwrite';
+import useAppwrite from '@lib/useAppwrite';
+import VideoCard from '@components/VideoCard';
+import { useLocalSearchParams } from 'expo-router';
+import InfoBox from '@components/InfoBox';
+import { router } from 'expo-router';
+import { useGlobalContext } from '@context/GlobalProvider';
+import { TouchableOpacity } from 'react-native';
+import { signOut } from '@lib/appwrite';
+
 
 
 const Profile = () => {
   const { user, setUser, setIsLoggedIn } = useGlobalContext();
-  const { data: posts } = useAppwrite(() => getUserPosts(user.$id));
-  
+  const { data: posts , refetch} = useAppwrite(() => getUserPosts(user.$id));
+  const [refreshing, setRefreshing] = useState(false)
   const logout = async () => {
     await signOut();  
     // setUser(null);
@@ -30,7 +31,11 @@ const Profile = () => {
   } 
 
   
-  
+  const onRefresh = async () => {
+    setRefreshing(true)
+    await refetch();
+    setRefreshing(false)
+  }
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList
@@ -40,6 +45,7 @@ const Profile = () => {
           <VideoCard
           video={item} // this passes the rest of the video details
           videoid={item.$id} // explicitly passing the video ID
+          onUpdate={onRefresh}
         />
         )}
         ListHeaderComponent={() => (
@@ -90,7 +96,9 @@ const Profile = () => {
           subtitle="No Videos found for this search"
          />
         )}
-        
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
       
     </SafeAreaView>

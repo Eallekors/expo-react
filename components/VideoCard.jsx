@@ -1,10 +1,11 @@
 import { View, Text, Image, Alert } from 'react-native'
 import React, { useState } from 'react'
-import { icons } from '../constants'
 import { TouchableOpacity } from 'react-native';
 import { ResizeMode, Video } from 'expo-av';
-import { handleVideoId } from '../lib/appwrite';
-import { useGlobalContext } from '../context/GlobalProvider';
+
+import { icons } from '@constants';
+import { handleVideoId } from '@lib/appwrite';
+import { useGlobalContext } from '@context/GlobalProvider';
 
 const VideoCard = ({video : {title,thumbnail,video,creator: { username, avatar} , users},videoid ,onUpdate  }) => {
     const [play, setPlay] = useState(false);

@@ -2,19 +2,19 @@ import { Text, View, FlatList, Image, RefreshControl, Alert, TextInput, Touchabl
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { icons } from '../../constants';
-import EmptyState from '../../components/EmptyState';
-import { getAllPosts } from '../../lib/appwrite';
-import useAppwrite from '../../lib/useAppwrite';
-import VideoCard from '../../components/VideoCard';
-import { useGlobalContext } from '../../context/GlobalProvider'; // Import the context to get user info
+import { icons } from '@constants'; 
+import EmptyState from '@components/EmptyState'; 
+import { getAllPosts } from '@lib/appwrite'; 
+import useAppwrite from '@lib/useAppwrite'; 
+import VideoCard from '@components/VideoCard'; 
+import { useGlobalContext } from '@context/GlobalProvider';
 
 const Bookmark = () => {
-  const { user } = useGlobalContext(); // Get the current user
+  const { user } = useGlobalContext(); 
   const { data: posts, refetch } = useAppwrite(getAllPosts);
 
   const [refreshing, setRefreshing] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(''); // State for the search query
+  const [searchQuery, setSearchQuery] = useState(''); 
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -22,14 +22,14 @@ const Bookmark = () => {
     setRefreshing(false);
   };
 
-  // Filter posts based on the current user's ID
+  
   const filteredPosts = posts?.filter(post => 
-    post.users && post.users.includes(user.accountId) // Ensure the post has a users array and includes the current user's ID
+    post.users && post.users.includes(user.accountId) 
   );
 
-  // Filter the posts based on the search query
+
   const searchedPosts = filteredPosts?.filter(post => 
-    post.title.toLowerCase().includes(searchQuery.toLowerCase()) // Filter by title
+    post.title.toLowerCase().includes(searchQuery.toLowerCase()) 
   );
 
   return (
@@ -46,15 +46,11 @@ const Bookmark = () => {
             value={searchQuery}
             placeholder="Search for a video topic"
             placeholderTextColor="#CDCDE0"
-            onChangeText={setSearchQuery} // Update the search query
+            onChangeText={setSearchQuery} 
           />
-          <TouchableOpacity
-            onPress={() => {
-              // You could add functionality for pressing the search icon here if needed
-            }}
-          >
+          <TouchableOpacity>
             <Image 
-              source={icons.search} // Make sure to import your search icon
+              source={icons.search} 
               className='w-5 h-5'
               resizeMode='contain'
             />
@@ -63,19 +59,19 @@ const Bookmark = () => {
       </View>
 
       <FlatList
-        data={searchedPosts} // Use the searchedPosts for FlatList data
+        data={searchedPosts} 
         keyExtractor={(item) => item.$id}
         renderItem={({ item }) => (
           <VideoCard
-          video={item} // this passes the rest of the video details
-          videoid={item.$id} // explicitly passing the video ID
+          video={item} 
+          videoid={item.$id} 
           onUpdate={refetch}
         />
         )}
         ListEmptyComponent={() => (
           <EmptyState
             title="No Videos Found"
-            subtitle="No Videos found for this search"
+            subtitle="Bookmark a video to see them here"
           />
         )}
         refreshControl={
