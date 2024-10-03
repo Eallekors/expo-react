@@ -58,7 +58,10 @@ const Create = () => {
        })
 
       Alert.alert('Success', 'Post uploaded successfully')
-      router.push('/home')
+      router.push({
+        pathname: '/home',
+        params: { refresh: true }
+      });
     } catch (error) {
       Alert.alert('Error', error.message)
     } finally {

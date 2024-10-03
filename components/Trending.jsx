@@ -25,7 +25,7 @@ const zoomOut = {
   },
 };
 
-const TredningItem = ({ activeItem, item}) => {
+const TrendingItem = ({ activeItem, item}) => {
   const [play, setPlay] = useState(false);
  
   return(
@@ -84,7 +84,7 @@ const Trending = ({ posts }) => {
         data={posts}
         keyExtractor={(item) => item.$id}
         renderItem={({ item }) => (
-            <TredningItem activeItem={activeItem} item={item} />
+            <TrendingItem activeItem={activeItem} item={item} />
         )}
         onViewableItemsChanged={viewableItemsChanged}
         viewabilityConfig={{

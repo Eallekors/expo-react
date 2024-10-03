@@ -1,6 +1,10 @@
 import { Text, View, FlatList, Image, RefreshControl, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
+import { useLocalSearchParams } from 'expo-router';
+
 
 import { images } from '@constants';
 import SearchInput from '@components/SearchInput';
@@ -15,17 +19,32 @@ import { useGlobalContext } from '@context/GlobalProvider';
 const Home = () => {
   const { user, setUser, setIsLoggedIn } = useGlobalContext();
   
-  const { data: posts, refetch } = useAppwrite(getAllPosts);
+  const { data: posts, refetch: refetchPosts } = useAppwrite(getAllPosts);
 
-  const { data: latestposts } = useAppwrite(getLatestPosts);
+  const { data: latestposts ,refetch: refetchLatestPosts} = useAppwrite(getLatestPosts);
 
   const [refreshing, setRefreshing] = useState(false)
+
+  const { refresh } = useLocalSearchParams(); // Use useLocalSearchParams to get 'refresh' parameter
+
   
   const onRefresh = async () => {
     setRefreshing(true)
-    await refetch();
+    await Promise.all([refetchPosts(), refetchLatestPosts()]); // Refetch both the main posts and latest posts
+    
     setRefreshing(false)
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      if (refresh) {
+        onRefresh();
+      }
+    }, [refresh])
+  );
+
+
+
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList
